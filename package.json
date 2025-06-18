@@ -1,0 +1,25 @@
+{
+   "name": "bot-whatsapp",
+   "version": "1.0.0",
+   "main": "index.js",
+   "scripts": {
+      "start": "node out/index.js",
+      "repair": "node out/index.js --use-pairing-code --do-reply",
+      "rerun": "tsc && node out/index.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "ISC",
+   "type": "commonjs",
+   "description": "",
+   "devDependencies": {
+      "typescript": "^5.8.3"
+   },
+   "dependencies": {
+      "baileys": "^6.7.18",
+      "chalk": "^5.4.1",
+      "fs": "^0.0.1-security",
+      "readline": "^1.3.0"
+   }
+}
