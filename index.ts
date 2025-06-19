@@ -145,7 +145,7 @@ const startSock = async () => {
             //    const result = await sock.sendWAMBuffer(buffer);
             //    console.log(result);
             // }
-
+            //
             console.log("connection update", update);
          }
 
