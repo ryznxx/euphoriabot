@@ -149,6 +149,7 @@ const startSock = () => __awaiter(void 0, void 0, void 0, function* () {
             //    const result = await sock.sendWAMBuffer(buffer);
             //    console.log(result);
             // }
+            //
             console.log("connection update", update);
         }
         // credentials updated -- save them
