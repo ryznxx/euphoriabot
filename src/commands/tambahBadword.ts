@@ -1,9 +1,10 @@
+import { sendMessage } from "./../handlers/reply.handler";
 import { Command } from "../types/types.command";
 import { filter } from "../core/badword.instance"; // misal ini instancenya
 
 export const tambahBadword: Command = {
-   commandName: "tambahBadword",
-   execute: (args: string) => {
+   commandName: "tambahbadword",
+   execute: async (args: string, jid: string, sender: string) => {
       if (!args.trim()) {
          console.log(
             "❌ Argumen kosong, masukkan kata kasar yang mau ditambahin"
@@ -25,6 +26,7 @@ export const tambahBadword: Command = {
       const status = filter.saveToKeywordFilter();
 
       if (status) {
+         await sendMessage({ text: "Halo bang 👋" }, sender);
          console.log("✅ Kata kasar ditambahkan:", kataKasar.join(", "));
       } else {
          console.log("❌ Gagal menyimpan ke file JSON");

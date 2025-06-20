@@ -56,10 +56,15 @@ export const newMessage = async (m: proto.IWebMessageInfo): Promise<void> => {
    const jid: string = m.key.remoteJid?.split("@")[0] || "-";
 
    /**
+    * Mendapatkan nomer format pengirim dari private chat, maupun grop chat
+    */
+   const sender: string | undefined = m.key.remoteJid?.toString();
+
+   /**
     * Jika pesan adalah command, lempar ke command handler
     */
    if (isPrompt) {
-      await cmdHandler(prompt, arg2, jid);
+      await cmdHandler(prompt, arg2, jid, sender);
    }
 
    /**

@@ -1,4 +1,3 @@
-// handlers/cmdHandler.ts
 import fs from "fs";
 import path from "path";
 import { Command } from "../types/types.command";
@@ -38,14 +37,17 @@ loadCommands(commandsDir);
 const cmdHandler = async (
    prompt: string,
    args: string,
-   jid: string
+   jid: string,
+   sender: string | null | undefined
 ): Promise<void> => {
+   if (!sender) return;
+
    const cmd = commands[prompt];
 
    if (!cmd) {
       console.log(
          chalk.italic.bgBlueBright.bold("unknown command"),
-         chalk.reset.red("never executed"),
+         chalk.reset.red(`${prompt} never executed`),
          "from",
          jid
       );
@@ -58,7 +60,8 @@ const cmdHandler = async (
       "from",
       jid
    );
-   await cmd.execute(args);
+
+   await cmd.execute(args, jid, sender);
 };
 
 export default cmdHandler;

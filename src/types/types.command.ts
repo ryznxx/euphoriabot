@@ -1,4 +1,4 @@
 export interface Command {
    commandName: string;
-   execute: (args: string) => void | Promise<void>;
+   execute: (args: string, jid: string, sender: string) => void | Promise<void>;
 }

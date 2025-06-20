@@ -1,4 +1,4 @@
-import { saveToJson } from "./helpers/saveToJson";
+import { saveToJson } from "./helper";
 
 export class BadWordFilter {
    private badWords: string[] = [];
@@ -38,7 +38,7 @@ export class BadWordFilter {
       const formatted = {
          listBadword: this.badWords.map((kata) => ({ kata })),
       };
-      return saveToJson("../keywords/list_badword.json", formatted);
+      return saveToJson("./src/keywords/list_badword.json", formatted);
    }
 
    public checkThisTextBadWord(text: string): boolean {

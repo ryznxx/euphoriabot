@@ -1,3 +1,4 @@
+import { initReply } from "./src/handlers/reply.handler";
 import { newMessage } from "./src/handlers/newMessage";
 import { Boom } from "@hapi/boom";
 import NodeCache from "@cacheable/node-cache";
@@ -339,7 +340,7 @@ const startSock = async () => {
          }
       }
    );
-
+   initReply(sock);
    return sock;
 
    async function getMessage(
