@@ -14,37 +14,67 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.newMessage = void 0;
 const chalk_1 = __importDefault(require("chalk"));
+const cmdHandler_1 = __importDefault(require("./cmdHandler"));
+/**
+ * Fungsi ini akan dijalankan setiap kali ada pesan masuk dari WhatsApp.
+ *
+ * Tujuan utamanya untuk:
+ * - Mengecek apakah pesan mengandung command (diawali prefix "!")
+ * - Menjalankan handler jika pesan adalah command
+ * - Menampilkan pesan biasa (log) jika bukan command
+ *
+ * @param m - Objek pesan dari Baileys
+ */
 const newMessage = (m) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+    var _a, _b, _c, _d, _e;
     /**
-     * kegunaan ini untuk mengambil prompt, setelah prefix
+     * Raw text dari pesan, jika ada.
+     * Bisa undefined/null kalau message kosong atau bukan text.
      */
-    const prompt = (_c = (_b = (_a = m.message) === null || _a === void 0 ? void 0 : _a.extendedTextMessage) === null || _b === void 0 ? void 0 : _b.text) === null || _c === void 0 ? void 0 : _c.toString().toLowerCase().slice(1).trim().split(" ")[0];
+    const rawText = (_c = (_b = (_a = m.message) === null || _a === void 0 ? void 0 : _a.extendedTextMessage) === null || _b === void 0 ? void 0 : _b.text) === null || _c === void 0 ? void 0 : _c.toString();
+    if (!rawText)
+        return;
     /**
-     * kegunaan variabel ini untuk cek apakah hasil text tersebut include prefix
+     * Menandakan apakah pesan dimulai dengan prefix "!"
+     * Ini artinya kemungkinan besar adalah command
      */
-    const isPrompt = (_f = (_e = (_d = m.message) === null || _d === void 0 ? void 0 : _d.extendedTextMessage) === null || _e === void 0 ? void 0 : _e.text) === null || _f === void 0 ? void 0 : _f.toString().startsWith("!");
+    const isPrompt = rawText.startsWith("!");
     /**
-     * kegunaan variabel ini untuk mengambil argumentasi setelah prompt
+     * Pecah isi pesan jadi array kata:
+     * - slice(1): buang prefix "!"
+     * - toLowerCase(): biar konsisten case-nya
      */
-    const arg2 = (_j = (_h = (_g = m.message) === null || _g === void 0 ? void 0 : _g.extendedTextMessage) === null || _h === void 0 ? void 0 : _h.text) === null || _j === void 0 ? void 0 : _j.toString().split(" ").slice(1).join(" ");
+    const words = rawText.trim().slice(1).toLowerCase().split(" ");
+    /**
+     * Nama perintah yang diketik user, misal: "test", "ping"
+     */
+    const prompt = words[0];
+    /**
+     * Argumen tambahan setelah command, digabung sebagai string
+     */
+    const arg2 = words.slice(1).join(" ");
+    /**
+     * Jika pesan adalah command, lempar ke command handler
+     */
     if (isPrompt) {
-        // <-- ini pokok cek apakah pesan ini bagian dari prompt
-        if (prompt == "test") {
-            console.log(arg2);
-        }
+        yield (0, cmdHandler_1.default)(prompt, arg2);
     }
-    else {
-        console.log(chalk_1.default.bgBlue(`[${((_k = m.key.remoteJid) === null || _k === void 0 ? void 0 : _k.split("@")[1].toString().includes("g.us"))
-            ? "group"
-            : "private"}]`) +
-            chalk_1.default.bgCyanBright(((_l = m.key.remoteJid) === null || _l === void 0 ? void 0 : _l.split("@")[1].toString().includes("g.us"))
-                ? chalk_1.default.bold(" gid ") +
-                    chalk_1.default.yellow((_m = m.key.remoteJid) === null || _m === void 0 ? void 0 : _m.split("@")[0].toString()) +
-                    " "
-                : chalk_1.default.bold(" nwa ") +
-                    ((_o = m.key.remoteJid) === null || _o === void 0 ? void 0 : _o.split("@")[0].toString()) +
-                    " "), "new message :", chalk_1.default.blueBright((_q = (_p = m.message) === null || _p === void 0 ? void 0 : _p.extendedTextMessage) === null || _q === void 0 ? void 0 : _q.text));
+    /**
+     * Jika bukan command, tampilkan isi pesan ke konsol (log monitoring)
+     */
+    if (!isPrompt) {
+        const isGroup = (_d = m.key.remoteJid) === null || _d === void 0 ? void 0 : _d.includes("g.us");
+        const jid = ((_e = m.key.remoteJid) === null || _e === void 0 ? void 0 : _e.split("@")[0]) || "-";
+        const prefix = isGroup
+            ? chalk_1.default.bgBlue("[group]") +
+                chalk_1.default.bgCyanBright.bold(" gid ") +
+                " " +
+                chalk_1.default.yellow(jid)
+            : chalk_1.default.bgBlue("[private]") +
+                chalk_1.default.bgCyanBright.bold(" nwa ") +
+                " " +
+                chalk_1.default.yellow(jid);
+        console.log(prefix, "message :", chalk_1.default.blueBright(rawText));
     }
 });
 exports.newMessage = newMessage;

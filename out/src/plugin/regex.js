@@ -26,14 +26,14 @@ class BadWordFilter {
      * @param words Array berisi kata-kata kasar yang akan ditambahkan
      */
     addBadWords(words) {
-        words.forEach(word => this.addBadWord(word));
+        words.forEach((word) => this.addBadWord(word));
     }
     /**
      * Menghapus kata kasar dari daftar
      * @param word Kata kasar yang akan dihapus
      */
     removeBadWord(word) {
-        this.badWords = this.badWords.filter(badWord => badWord !== word);
+        this.badWords = this.badWords.filter((badWord) => badWord !== word);
     }
     /**
      * Mendapatkan daftar kata kasar yang tersimpan
@@ -53,7 +53,7 @@ class BadWordFilter {
         }
         // Membuat pola regex dari daftar kata kasar
         // Menggunakan word boundary (\b) untuk memastikan pencocokan kata utuh
-        const pattern = new RegExp(`\\b(${this.badWords.join('|')})\\b`, 'i');
+        const pattern = new RegExp(`\\b(${this.badWords.join("|")})\\b`, "i");
         // Mengembalikan false jika kata kasar terdeteksi, true jika tidak
         return !pattern.test(text);
     }
@@ -63,14 +63,14 @@ class BadWordFilter {
      * @param censorChar Karakter untuk menyensor (default: '*')
      * @returns Teks yang sudah disensor
      */
-    censorText(text, censorChar = '*') {
+    censorText(text, censorChar = "*") {
         if (!text || this.badWords.length === 0) {
             return text;
         }
         let censoredText = text;
         // Membuat pola regex untuk setiap kata kasar
-        this.badWords.forEach(word => {
-            const pattern = new RegExp(`\\b${word}\\b`, 'gi');
+        this.badWords.forEach((word) => {
+            const pattern = new RegExp(`\\b${word}\\b`, "gi");
             censoredText = censoredText.replace(pattern, censorChar.repeat(word.length));
         });
         return censoredText;

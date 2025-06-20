@@ -1,68 +1,74 @@
 import { proto } from "baileys";
 import chalk from "chalk";
+import cmdHandler from "./cmdHandler";
 
 /**
- * setiap kali pesan masuk maka fungsi ini akan dieksekusi
- * untuk menyimpan dan melakukan aksi
- * @description sebuah arrow fungsi untuk handling pesan baru
- * @summary future
- * @param m message interface
+ * Fungsi ini akan dijalankan setiap kali ada pesan masuk dari WhatsApp.
+ *
+ * Tujuan utamanya untuk:
+ * - Mengecek apakah pesan mengandung command (diawali prefix "!")
+ * - Menjalankan handler jika pesan adalah command
+ * - Menampilkan pesan biasa (log) jika bukan command
+ *
+ * @param m - Objek pesan dari Baileys
  */
-export const newMessage = async (m: proto.IWebMessageInfo) => {
+export const newMessage = async (m: proto.IWebMessageInfo): Promise<void> => {
    /**
-    * kegunaan ini untuk mengambil prompt, setelah prefix
+    * Raw text dari pesan, jika ada.
+    * Bisa undefined/null kalau message kosong atau bukan text.
     */
-   const prompt: string | unknown | undefined =
-      m.message?.extendedTextMessage?.text
-         ?.toString()
-         .toLowerCase()
-         .slice(1)
-         .trim()
-         .split(" ")[0];
+   const rawText: string | undefined | null =
+      m.message?.extendedTextMessage?.text?.toString();
+
+   if (!rawText) return;
 
    /**
-    * kegunaan variabel ini untuk cek apakah hasil text tersebut include prefix
+    * Menandakan apakah pesan dimulai dengan prefix "!"
+    * Ini artinya kemungkinan besar adalah command
     */
-   const isPrompt: boolean | unknown | undefined =
-      m.message?.extendedTextMessage?.text?.toString().startsWith("!");
+   const isPrompt: boolean = rawText.startsWith("!");
 
    /**
-    * kegunaan variabel ini untuk mengambil argumentasi setelah prompt
+    * Pecah isi pesan jadi array kata:
+    * - slice(1): buang prefix "!"
+    * - toLowerCase(): biar konsisten case-nya
     */
-   const arg2: string | unknown | undefined =
-      m.message?.extendedTextMessage?.text
-         ?.toString()
-         .split(" ")
-         .slice(1)
-         .join(" ");
+   const words: string[] = rawText.trim().slice(1).toLowerCase().split(" ");
 
+   /**
+    * Nama perintah yang diketik user, misal: "test", "ping"
+    */
+   const prompt: string = words[0];
+
+   /**
+    * Argumen tambahan setelah command, digabung sebagai string
+    */
+   const arg2: string = words.slice(1).join(" ");
+
+   /**
+    * Jika pesan adalah command, lempar ke command handler
+    */
    if (isPrompt) {
-      // <-- ini pokok cek apakah pesan ini bagian dari prompt
-      if (prompt == "test") {
-         console.log(arg2);
-      }
+      await cmdHandler(prompt, arg2);
    }
 
+   /**
+    * Jika bukan command, tampilkan isi pesan ke konsol (log monitoring)
+    */
    if (!isPrompt) {
-      console.log(
-         chalk.bgBlue(
-            `[${
-               m.key.remoteJid?.split("@")[1].toString().includes("g.us")
-                  ? "group"
-                  : "private"
-            }]`
-         ) +
-            chalk.bgCyanBright(
-               m.key.remoteJid?.split("@")[1].toString().includes("g.us")
-                  ? chalk.bold(" gid ") +
-                       chalk.yellow(m.key.remoteJid?.split("@")[0].toString()) +
-                       " "
-                  : chalk.bold(" nwa ") +
-                       m.key.remoteJid?.split("@")[0].toString() +
-                       " "
-            ),
-         "message :",
-         chalk.blueBright(m.message?.extendedTextMessage?.text)
-      );
+      const isGroup = m.key.remoteJid?.includes("g.us");
+      const jid = m.key.remoteJid?.split("@")[0] || "-";
+
+      const prefix = isGroup
+         ? chalk.bgBlue("[group]") +
+           chalk.bgCyanBright.bold(" gid ") +
+           " " +
+           chalk.yellow(jid)
+         : chalk.bgBlue("[private]") +
+           chalk.bgCyanBright.bold(" nwa ") +
+           " " +
+           chalk.yellow(jid);
+
+      console.log(prefix, "message :", chalk.blueBright(rawText));
    }
 };
