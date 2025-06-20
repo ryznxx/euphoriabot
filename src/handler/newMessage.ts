@@ -46,19 +46,26 @@ export const newMessage = async (m: proto.IWebMessageInfo): Promise<void> => {
    const arg2: string = words.slice(1).join(" ");
 
    /**
+    * Cek apakah pesan dari grup
+    */
+   const isGroup: boolean | undefined = m.key.remoteJid?.includes("g.us");
+
+   /**
+    * Mendapatkan nomer dari private chat, maupun grop chat
+    */
+   const jid: string = m.key.remoteJid?.split("@")[0] || "-";
+
+   /**
     * Jika pesan adalah command, lempar ke command handler
     */
    if (isPrompt) {
-      await cmdHandler(prompt, arg2);
+      await cmdHandler(prompt, arg2, jid);
    }
 
    /**
     * Jika bukan command, tampilkan isi pesan ke konsol (log monitoring)
     */
    if (!isPrompt) {
-      const isGroup = m.key.remoteJid?.includes("g.us");
-      const jid = m.key.remoteJid?.split("@")[0] || "-";
-
       const prefix = isGroup
          ? chalk.bgBlue("[group]") +
            chalk.bgCyanBright.bold(" gid ") +

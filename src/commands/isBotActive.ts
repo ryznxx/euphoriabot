@@ -1,10 +1,8 @@
-import { Command } from "./types.command";
+import { Command } from "../types/types.command";
 
 export const isBotActive: Command = {
    commandName: "aktif",
-   execute: (args: string) => {
-      console.log("Bot sedang aktif dengan argumen:", args);
-   },
+   execute: (args: string) => {},
 };
 
 export default isBotActive;

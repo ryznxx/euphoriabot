@@ -1,7 +1,8 @@
 // handlers/cmdHandler.ts
 import fs from "fs";
 import path from "path";
-import { Command } from "../commands/types.command";
+import { Command } from "../types/types.command";
+import chalk from "chalk";
 
 const commands: Record<string, Command> = {};
 
@@ -34,14 +35,29 @@ loadCommands(commandsDir);
 /**
  * Menjalankan command berdasarkan prompt
  */
-const cmdHandler = async (prompt: string, args: string): Promise<void> => {
+const cmdHandler = async (
+   prompt: string,
+   args: string,
+   jid: string
+): Promise<void> => {
    const cmd = commands[prompt];
 
    if (!cmd) {
-      console.log(`Perintah "${prompt}" tidak ditemukan`);
+      console.log(
+         chalk.italic.bgBlueBright.bold("unknown command"),
+         chalk.reset.red("never executed"),
+         "from",
+         jid
+      );
       return;
    }
 
+   console.log(
+      chalk.italic.bgBlueBright.bold("executed command"),
+      chalk.reset.yellow(cmd.commandName),
+      "from",
+      jid
+   );
    await cmd.execute(args);
 };
 
