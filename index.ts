@@ -1,4 +1,4 @@
-import { newMessage } from "./src/handler/newMessage";
+import { newMessage } from "./src/handlers/newMessage";
 import { Boom } from "@hapi/boom";
 import NodeCache from "@cacheable/node-cache";
 import readline from "readline";
