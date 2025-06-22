@@ -1,3 +1,4 @@
+import { sendMessage, sendMessageWTyping } from "./reply.handler";
 import { proto } from "baileys";
 import chalk from "chalk";
 import cmdHandler from "./cmdHandler";
@@ -64,7 +65,7 @@ export const newMessage = async (m: proto.IWebMessageInfo): Promise<void> => {
     * Jika pesan adalah command, lempar ke command handler
     */
    if (isPrompt) {
-      await cmdHandler(prompt, arg2, jid, sender);
+      await cmdHandler(rawText, prompt, arg2, jid, sender);
    }
 
    /**

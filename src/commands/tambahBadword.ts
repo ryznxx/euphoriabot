@@ -2,12 +2,19 @@ import { sendMessage } from "./../handlers/reply.handler";
 import { Command } from "../types/types.command";
 import { filter } from "../core/badword.instance"; // misal ini instancenya
 
+function coded(word: string): string {
+   return "```" + word + "```";
+}
+
 export const tambahBadword: Command = {
    commandName: "tambahbadword",
    execute: async (args: string, jid: string, sender: string) => {
       if (!args.trim()) {
-         console.log(
-            "❌ Argumen kosong, masukkan kata kasar yang mau ditambahin"
+         await sendMessage(
+            {
+               text: `Argumentasi salah! tambahkan badwordnya!`,
+            },
+            sender
          );
          return;
       }
@@ -18,25 +25,45 @@ export const tambahBadword: Command = {
          .filter((w) => !!w);
 
       if (kataKasar.length === 0) {
-         console.log("❌ Tidak ada kata valid untuk ditambahkan");
+         await sendMessage(
+            {
+               text: `Argumentasi salah! tambahkan badwordnya!`,
+            },
+            sender
+         );
          return;
       }
 
-      filter.addBadWords(kataKasar);
-      const status = filter.saveToKeywordFilter();
+      const badwordWasAdded: boolean = filter.addBadWords(kataKasar);
+
+      if (!badwordWasAdded) {
+         await sendMessage(
+            {
+               text: `${coded(args.split(",").toString())} sudah ditambahkan`,
+            },
+            sender
+         );
+         return;
+      }
+
+      const status: boolean = filter.saveToKeywordFilter();
 
       if (status) {
          await sendMessage(
             {
-               text: `${args.split(
-                  ","
+               text: `${coded(
+                  args.split(",").toString()
                )} sudah ditambahkan kedalam database badword`,
             },
             sender
          );
-         console.log("✅ Kata kasar ditambahkan:", kataKasar.join(", "));
       } else {
-         console.log("❌ Gagal menyimpan ke file JSON");
+         await sendMessage(
+            {
+               text: `${coded(args.split(",").toString())} gagal ditambahkan`,
+            },
+            sender
+         );
       }
    },
 };

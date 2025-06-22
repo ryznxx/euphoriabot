@@ -1,4 +1,6 @@
+import { sendMessage, sendMessageWTyping } from "./reply.handler";
 import fs from "fs";
+import { filter } from "./../core/badword.instance";
 import path from "path";
 import { Command } from "../types/types.command";
 import chalk from "chalk";
@@ -35,6 +37,7 @@ loadCommands(commandsDir);
  * Menjalankan command berdasarkan prompt
  */
 const cmdHandler = async (
+   rawText: string,
    prompt: string,
    args: string,
    jid: string,
@@ -43,6 +46,17 @@ const cmdHandler = async (
    if (!sender) return;
 
    const cmd = commands[prompt];
+
+   if (
+      filter.checkThisTextBadWord(rawText) &&
+      prompt.toLocaleLowerCase() !== "tambahbadword" &&
+      args !== ""
+   ) {
+      sendMessageWTyping(
+         { text: "kalimat mengandung kata kasar dan tidak sopan" },
+         sender as string
+      );
+   }
 
    if (!cmd) {
       console.log(
@@ -61,7 +75,14 @@ const cmdHandler = async (
       jid
    );
 
-   await cmd.execute(args, jid, sender);
+   if (!filter.checkThisTextBadWord(rawText)) {
+      await cmd.execute(args, jid, sender);
+   } else {
+      sendMessage(
+         { text: "operasi perintah tidak dijalankan" },
+         sender as string
+      );
+   }
 };
 
 export default cmdHandler;

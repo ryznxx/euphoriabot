@@ -6,6 +6,9 @@
       "start": "node out/index.js",
       "repair": "rm -rf baileys_auth_info && tsc && node out/index.js --use-pairing-code --do-reply",
       "rerun": "tsc && node out/index.js --do-reply",
+      "dev": "tsc --watch",
+      "serve": "nodemon",
+      "nstart": "concurrently \"npm run dev\" \"npm run serve\"",
       "test": "echo \"Error: no test specified\" && exit 1"
    },
    "keywords": [],
@@ -14,6 +17,7 @@
    "type": "commonjs",
    "description": "",
    "devDependencies": {
+      "concurrently": "^9.2.0",
       "typescript": "^5.8.3"
    },
    "dependencies": {
