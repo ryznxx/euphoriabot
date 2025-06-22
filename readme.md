@@ -1,4 +1,4 @@
-````markdown
+
 # Euphoria Project - WhatsApp Bot
 
 _Euphoria Project_ adalah aplikasi **bot WhatsApp** berbasis **TypeScript** yang ditujukan untuk mendukung kegiatan **pengabdian masyarakat**. Bot ini mempermudah komunikasi otomatis, pengiriman informasi cepat, serta rencananya akan diintegrasikan dengan **Large Language Model (LLM)** untuk kecerdasan respon lanjutan.
@@ -20,7 +20,7 @@ Pastikan Anda memiliki `Node.js` dan `typescript` (disarankan versi 18 ke atas) 
 git clone https://github.com/namamu/euphoria-bot.git
 cd euphoria-bot
 ```
-````
+
 
 2. **Instal dependensi:**
 
@@ -64,9 +64,6 @@ Silakan fork repo ini dan ajukan pull request!
 
 Proyek ini menggunakan lisensi **MIT License**. Silakan lihat file [LICENSE](./LICENSE) untuk informasi lengkap.
 
-## 📬 Kontak
-
-Untuk kolaborasi, pertanyaan teknis, atau dukungan lainnya, hubungi melalui WhatsApp resmi atau email yang tercantum di halaman repo.
 
 ---
 
