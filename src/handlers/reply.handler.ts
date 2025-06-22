@@ -1,6 +1,6 @@
-import { AnyMessageContent, WASocket, delay } from "baileys";
+import { proto, AnyMessageContent, WASocket, delay } from "baileys";
 
-let sock: WASocket; // GLOBAL DALAM MODULE
+let sock: WASocket;
 
 /**
  * Inisialisasi sock dari luar, cukup dipanggil sekali
@@ -29,6 +29,7 @@ export const sendMessageWTyping = async (
 
    await sock.sendMessage(jid, msg);
 };
+
 export const sendMessage = async (msg: AnyMessageContent, jid: string) => {
    if (!sock)
       throw new Error("Sock belum di-init, panggil initReply(sock) dulu!");

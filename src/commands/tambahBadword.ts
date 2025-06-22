@@ -13,7 +13,7 @@ export const tambahBadword: Command = {
       }
 
       const kataKasar = args
-         .split(",") // bisa juga pake spasi atau split yang lain
+         .split(",")
          .map((w) => w.trim())
          .filter((w) => !!w);
 
@@ -26,7 +26,14 @@ export const tambahBadword: Command = {
       const status = filter.saveToKeywordFilter();
 
       if (status) {
-         await sendMessage({ text: "Halo bang 👋" }, sender);
+         await sendMessage(
+            {
+               text: `${args.split(
+                  ","
+               )} sudah ditambahkan kedalam database badword`,
+            },
+            sender
+         );
          console.log("✅ Kata kasar ditambahkan:", kataKasar.join(", "));
       } else {
          console.log("❌ Gagal menyimpan ke file JSON");

@@ -1,7 +1,6 @@
 import { initReply } from "./src/handlers/reply.handler";
 import { newMessage } from "./src/handlers/newMessage";
 import { Boom } from "@hapi/boom";
-import NodeCache from "@cacheable/node-cache";
 import readline from "readline";
 import makeWASocket, {
    AnyMessageContent,
@@ -254,7 +253,6 @@ const startSock = async () => {
                         );
                      }
 
-                     // go to an old chat and send this
                      if (text == "onDemandHistSync") {
                         const messageId = await sock.fetchMessageHistory(
                            50,
@@ -270,12 +268,7 @@ const startSock = async () => {
                      doReplies &&
                      !isJidNewsletter(msg.key?.remoteJid!)
                   ) {
-                     console.log("replying to", msg.key.remoteJid);
                      await sock!.readMessages([msg.key]);
-                     await sendMessageWTyping(
-                        { text: "Hello there!" },
-                        msg.key.remoteJid!
-                     );
                   }
                }
             }

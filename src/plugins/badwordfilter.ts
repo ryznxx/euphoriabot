@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import { saveToJson } from "./helper";
 
 export class BadWordFilter {
@@ -9,6 +10,15 @@ export class BadWordFilter {
     */
    private syncRegex(): void {
       this.regexList = this.badWords.map((word) => new RegExp(word, "i"));
+   }
+
+   public loadBadword(): void {
+      const data: string = fs
+         .readFileSync("./src/keywords/list_badword.json")
+         .toString();
+      const parsedData = JSON.parse(data);
+      console.log(parsedData.listBadword);
+      this.badWords = parsedData.listBadword;
    }
 
    public addBadWord(word: string): void {

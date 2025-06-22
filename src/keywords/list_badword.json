@@ -1,7 +1,12 @@
 {
   "listBadword": [
     {
-      "kata": "puki"
+      "kata": {
+        "kata": "tempikx"
+      }
+    },
+    {
+      "kata": "tempikx"
     }
   ]
 }
