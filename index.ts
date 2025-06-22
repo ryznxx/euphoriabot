@@ -19,8 +19,6 @@ import makeWASocket, {
    WAMessageContent,
    WAMessageKey,
 } from "baileys";
-//import MAIN_LOGGER from '../src/Utils/logger'
-import fs from "fs";
 import P from "pino";
 
 const logger = P(
@@ -32,13 +30,6 @@ logger.level = "trace";
 const doReplies = process.argv.includes("--do-reply");
 const usePairingCode = process.argv.includes("--use-pairing-code");
 
-// external map to store retry counts of messages when decryption/encryption fails
-// keep this out of the socket itself, so as to prevent a message decryption/encryption loop across socket restarts
-// const msgRetryCounterCache = new NodeCache();
-
-// const onDemandMap = new Map<string, string>();
-
-// Read line interface
 const rl = readline.createInterface({
    input: process.stdin,
    output: process.stdout,
@@ -46,12 +37,9 @@ const rl = readline.createInterface({
 const question = (text: string) =>
    new Promise<string>((resolve) => rl.question(text, resolve));
 
-// start a connection
 const startSock = async () => {
    const { state, saveCreds } = await useMultiFileAuthState("session");
-   // fetch latest version of WA Web
    const { version, isLatest } = await fetchLatestBaileysVersion();
-   // console.log(`using WA v${version.join(".")}, isLatest: ${isLatest}`);
 
    const sock = makeWASocket({
       version,
