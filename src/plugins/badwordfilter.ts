@@ -20,7 +20,7 @@ export class BadWordFilter {
       console.log(parsedData.listBadword);
       this.badWords = parsedData.listBadword;
    }
-
+   
    public addBadWord(word: string): void {
       if (!this.badWords.includes(word)) {
          this.badWords.push(word);
