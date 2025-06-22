@@ -4,7 +4,7 @@
    "main": "index.js",
    "scripts": {
       "start": "node out/index.js",
-      "repair": "rm -rf baileys_auth_info && node out/index.js --use-pairing-code --do-reply",
+      "repair": "rm -rf baileys_auth_info && tsc && node out/index.js --use-pairing-code --do-reply",
       "rerun": "tsc && node out/index.js --do-reply",
       "test": "echo \"Error: no test specified\" && exit 1"
    },
