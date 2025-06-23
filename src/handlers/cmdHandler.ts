@@ -4,6 +4,7 @@ import { filter } from "./../core/badword.instance";
 import path from "path";
 import { Command } from "../types/types.command";
 import chalk from "chalk";
+import error from "../keywords/error.message";
 
 const commands: Record<string, Command> = {};
 
@@ -52,10 +53,7 @@ const cmdHandler = async (
       prompt.toLocaleLowerCase() !== "tambahbadword" &&
       args !== ""
    ) {
-      sendMessageWTyping(
-         { text: "kalimat mengandung kata kasar dan tidak sopan" },
-         sender as string
-      );
+      sendMessageWTyping({ text: error.badword }, sender as string);
    }
 
    if (!cmd) {
