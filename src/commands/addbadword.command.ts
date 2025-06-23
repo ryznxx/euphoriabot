@@ -1,5 +1,5 @@
 import { sendMessage } from "../handlers/reply.handler";
-import { Command } from "../types/types.command";
+import { Command } from "../types/command.types";
 import { filter } from "../core/badword.instance"; // misal ini instancenya
 import error from "../keywords/error.message";
 
@@ -37,7 +37,7 @@ export const tambahBadword: Command = {
 
       const badwordWasAdded: boolean = filter.addBadWords(kataKasar);
 
-      if (!badwordWasAdded) {
+      if (badwordWasAdded) {
          await sendMessage(
             {
                text: `${coded(args.split(",").toString())} ${

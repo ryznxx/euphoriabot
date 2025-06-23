@@ -1,7 +1,7 @@
 import { sendMessage, sendMessageWTyping } from "./reply.handler";
 import { proto } from "baileys";
 import chalk from "chalk";
-import cmdHandler from "./cmdHandler";
+import cmdHandler from "./command.handler";
 
 /**
  * Fungsi ini akan dijalankan setiap kali ada pesan masuk dari WhatsApp.

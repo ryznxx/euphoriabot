@@ -1,5 +1,5 @@
 import { sendMessage, sendMessageWTyping } from "../handlers/reply.handler";
-import { Command } from "../types/types.command";
+import { Command } from "../types/command.types";
 
 export const isBotActive: Command = {
    commandName: "aktif",

@@ -1,5 +1,5 @@
 import { initReply } from "./src/handlers/reply.handler";
-import { newMessage } from "./src/handlers/newMessage";
+import { newMessage } from "./src/handlers/message.handler";
 import { Boom } from "@hapi/boom";
 import readline from "readline";
 import makeWASocket, {

@@ -1,8 +1,8 @@
 import { sendMessage, sendMessageWTyping } from "./reply.handler";
 import fs from "fs";
-import { filter } from "./../core/badword.instance";
+import { filter } from "../core/badword.instance";
 import path from "path";
-import { Command } from "../types/types.command";
+import { Command } from "../types/command.types";
 import chalk from "chalk";
 import error from "../keywords/error.message";
 
@@ -54,6 +54,7 @@ const cmdHandler = async (
       args !== ""
    ) {
       sendMessageWTyping({ text: error.badword }, sender as string);
+      return;
    }
 
    if (!cmd) {
@@ -63,6 +64,7 @@ const cmdHandler = async (
          "from",
          jid
       );
+      sendMessageWTyping({ text: error.unknownCommand }, sender as string);
       return;
    }
 
@@ -73,11 +75,7 @@ const cmdHandler = async (
       jid
    );
 
-   if (!filter.checkThisTextBadWord(rawText)) {
-      await cmd.execute(args, jid, sender);
-   } else {
-      sendMessage({ text: error.commandNotExecuted }, sender as string);
-   }
+   await cmd.execute(args, jid, sender);
 };
 
 export default cmdHandler;
