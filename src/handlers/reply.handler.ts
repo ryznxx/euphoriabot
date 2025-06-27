@@ -36,3 +36,12 @@ export const sendMessage = async (msg: AnyMessageContent, jid: string) => {
 
    await sock.sendMessage(jid, msg);
 };
+
+export const sendMessageWImage = async (
+   msg: AnyMessageContent,
+   jid: string
+) => {
+   if (!sock)
+      throw new Error("Sock belum di-init, panggil initReply(sock) dulu!");
+};
+

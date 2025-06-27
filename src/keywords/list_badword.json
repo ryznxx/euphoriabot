@@ -1,58 +1,88 @@
 {
-  "listBadword": [
-    {
-      "kata": "anjay"
-    },
-    {
-      "kata": "kontol"
-    },
-    {
-      "kata": "anjing"
-    },
-    {
-      "kata": "puki"
-    },
-    {
-      "kata": "silit"
-    },
-    {
-      "kata": "fuck"
-    },
-    {
-      "kata": "bitch"
-    },
-    {
-      "kata": "asshole"
-    },
-    {
-      "kata": "konbrut"
-    },
-    {
-      "kata": "asu"
-    },
-    {
-      "kata": "ajing"
-    },
-    {
-      "kata": "jancok"
-    },
-    {
-      "kata": "celeng"
-    },
-    {
-      "kata": "pepek"
-    },
-    {
-      "kata": "goblok"
-    },
-    {
-      "kata": "tolol"
-    },
-    {
-      "kata": "peli"
-    },
-    {
-      "kata": "telanjang"
-    }
-  ]
+   "listBadword": [
+      {
+         "kata": "anjay"
+      },
+      {
+         "kata": "kontol"
+      },
+      {
+         "kata": "anjing"
+      },
+      {
+         "kata": "puki"
+      },
+      {
+         "kata": "silit"
+      },
+      {
+         "kata": "fuck"
+      },
+      {
+         "kata": "bitch"
+      },
+      {
+         "kata": "asshole"
+      },
+      {
+         "kata": "konbrut"
+      },
+      {
+         "kata": "asu"
+      },
+      {
+         "kata": "ajing"
+      },
+      {
+         "kata": "jancok"
+      },
+      {
+         "kata": "celeng"
+      },
+      {
+         "kata": "pepek"
+      },
+      {
+         "kata": "goblok"
+      },
+      {
+         "kata": "tolol"
+      },
+      {
+         "kata": "peli"
+      },
+      {
+         "kata": "telanjang"
+      },
+      {
+         "kata": "tempik"
+      },
+      {
+         "kata": "jalang"
+      },
+      {
+         "kata": "tobrut"
+      },
+      {
+         "kata": "anal"
+      },
+      {
+         "kata": "crot"
+      },
+      {
+         "kata": "lonte"
+      },
+      {
+         "kata": "dick"
+      },
+      {
+         "kata": "lildick"
+      },
+      {
+         "kata": "cock"
+      },
+      {
+         "kata": "bigcock"
+      }
+   ]
 }

@@ -1,3 +1,4 @@
+import { filter } from "./../core/badword.instance";
 import { sendMessage, sendMessageWTyping } from "./reply.handler";
 import { proto } from "baileys";
 import chalk from "chalk";
@@ -71,6 +72,8 @@ export const newMessage = async (m: proto.IWebMessageInfo): Promise<void> => {
    /**
     * Jika bukan command, tampilkan isi pesan ke konsol (log monitoring)
     */
+   console.log(filter.getBadWords());
+
    if (!isPrompt) {
       const prefix = isGroup
          ? chalk.bgBlue("[group]") +

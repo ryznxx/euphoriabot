@@ -2,6 +2,7 @@ import { sendMessage } from "../handlers/reply.handler";
 import { Command } from "../types/command.types";
 import { filter } from "../core/badword.instance"; // misal ini instancenya
 import error from "../keywords/error.message";
+import success from "../keywords/success.message";
 
 function coded(word: string): string {
    return "```" + word + "```";
@@ -36,13 +37,10 @@ export const tambahBadword: Command = {
       }
 
       const badwordWasAdded: boolean = filter.addBadWords(kataKasar);
-
-      if (badwordWasAdded) {
+      if (!badwordWasAdded) {
          await sendMessage(
             {
-               text: `${coded(args.split(",").toString())} ${
-                  error.badwordExists
-               }`,
+               text: `${error.badwordExists}`,
             },
             sender
          );
@@ -54,9 +52,9 @@ export const tambahBadword: Command = {
       if (status) {
          await sendMessage(
             {
-               text: `${coded(args.split(",").toString())} ${
-                  error.badwordAddSuccess
-               }`,
+               text: `${success.addedBadword}: ${coded(
+                  args.split(",").toString()
+               )}`,
             },
             sender
          );

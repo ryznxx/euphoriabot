@@ -23,7 +23,7 @@ const error: ErrorMess = {
    saveFailed: "gagal menyimpan data",
    invalidBadwordFormat: "Format JSON badword salah",
    invalidArgument: "Argumentasi salah! tambahkan badwordnya!",
-   badwordExists: "kata tersebut sudah ditambahkan",
+   badwordExists: "badword sudah ditambahkan",
    badwordAddSuccess:
       "kata tersebut sudah ditambahkan kedalam database badword",
    badwordAddFailed: "kata tersebut gagal ditambahkan",

@@ -94,6 +94,7 @@ const startSock = async () => {
             }
          }
          if (update.connection === "connecting") {
+            console.log("\x1Bc");
             console.clear();
             console.log("Mencoba untuk menghubungkan socket ke whatsapp");
          } else if (update.connection === "open") {
@@ -101,7 +102,7 @@ const startSock = async () => {
             console.log("Socket terhubung dengan whatsapp");
             console.log("Bot siap digunakan, menunggu aksi clients :)");
          } else {
-            console.log("Socket gagal terhubung");
+            console.log("Socket gagal terhubung, retrying..");
          }
       }
 
@@ -218,13 +219,13 @@ const startSock = async () => {
                   }
                }
 
-               if (
-                  !msg.key.fromMe &&
-                  doReplies &&
-                  !isJidNewsletter(msg.key?.remoteJid!)
-               ) {
-                  await sock!.readMessages([msg.key]);
-               }
+               // if (
+               //    !msg.key.fromMe &&
+               //    doReplies &&
+               //    !isJidNewsletter(msg.key?.remoteJid!)
+               // ) {
+               await sock!.readMessages([msg.key]);
+               // }
             }
          }
       }
